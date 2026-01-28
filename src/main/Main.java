@@ -1,88 +1,194 @@
 package main;
 
+import java.util.Scanner;
+
 import java.util.Collection;
 
 import model.Student;
 import service.StudentService;
 
-public class Main{
-    public static void main(String[] args){
-    // Created a Reference Variable Using Student Class 
-        Student student1 = new Student(1,"Avinash",85);
-        Student student2 = new Student(2,"Ravi",97);
-       
-    // Created a Reference Variable Using StudentService Class
-        StudentService studentservice = new StudentService();
+public class Main {
+    public static void main(String[] args) {
 
-    // Adding First Student Data
-        if(studentservice.addStudent(student1)){
-            System.out.println("Added Student Data Successfully");
-        }
-        else{
-            System.out.println("This ID already exists in DataBase..");
-        }
+        // Created a Reference Object Using StudentService Class
+        StudentService studentService = new StudentService();
 
-    // Adding Second Student Data
-        if(studentservice.addStudent(student2)){
-            System.out.println("Added Student Data Successfully");
-        }
-        else{
-            System.out.println("This ID already exists in DataBase..");
-        }
-  
-    // Deleting or Removing the Student Data Based on Student ID
-        if(studentservice.deleteStudent(1) == true){
-            System.out.println("SuccessFully Remove Student Data..");
-        }
-        else{
-            System.out.println("Student ID doesn't Exist's in DataBase..");
-        }
+        // Creating a Menu-Driven Console App
 
-    // Updating Student Name based on Student ID
-        if(studentservice.updateStudentName(1, "Hari")){
-            System.out.println("Name Has Been Updated..");
-        }
-        else{
-            System.out.println("Entered Invalid ID!!");
-        }
+        Scanner sc = new Scanner(System.in);
 
-    // Updating Student Marks Based on Student ID
-        if(studentservice.updateStudentMarks(1, 95)){
-            System.out.println("Marks Has Been Updated..");
-        }
-        else{
-            System.out.println("Entered Invalid ID!!");
-        }
-        
+        while (true) {
+            System.out.println("\n--- MENU ---");
+            System.out.println(
+                    "1. Add Student\n2. Delete Student\n3. Update Student Name\n4. Update Student Marks\n5. View Student by ID\n6. View All Students\n7.studentExists\n8. Exit");
 
-    // Showing All Students Details
-        Collection<Student> students = studentservice.getAllStudents();
+            System.out.print("Choosen One:");
+            int choice = sc.nextInt();
 
-        for(Student s : students){
-            System.out.println(s);
+            int id;
+            String name;
+            int marks;
+
+            switch (choice) {
+                case 1:
+                    // Adding First Student Data
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    System.out.print("Enter Name:");
+                    sc.nextLine();
+                    name = sc.nextLine();
+
+                    if (name == null || name.isBlank()) {
+                        System.out.println("Enter Valid Name..");
+                        break;
+                    }
+
+                    System.out.print("Enter Marks:");
+                    marks = sc.nextInt();
+
+                    if (marks < 0 || marks > 100) {
+                        System.out.println("Enter Valid Marks..");
+                        break;
+                    }
+
+                    Student student = new Student(id, name, marks);
+
+                    if (studentService.addStudent(student)) {
+                        System.out.println("Added Student Data Successfully");
+                    } else {
+                        System.out.println("This ID already exists or Entered Invalid data");
+                    }
+
+                    break;
+
+                case 2:
+                    // Deleting or Removing the Student Data Based on Student ID
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    if (studentService.deleteStudent(id) == true) {
+                        System.out.println("SuccessFully Removed Student Data..");
+                    } else {
+                        System.out.println("Student ID doesn't Exist's in DataBase..");
+                    }
+                    break;
+
+                case 3:
+                    // Updating Student Name based on Student ID
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    System.out.print("Enter Name:");
+                    sc.nextLine();
+                    name = sc.nextLine();
+                    if (name == null || name.isBlank()) {
+                        System.out.println("Enter Valid Name..");
+                        break;
+                    }
+
+                    if (studentService.updateStudentName(id, name)) {
+                        System.out.println("Name Has Been Updated..");
+                    } else {
+                        System.out.println("Entered Invalid ID!!");
+                    }
+                    break;
+                case 4:
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    System.out.print("Enter Marks:");
+                    marks = sc.nextInt();
+
+                    if (marks < 0 || marks > 100) {
+                        System.out.println("Enter Valid Marks..");
+                        break;
+                    }
+
+                    // Updating Student Marks Based on Student ID
+                    if (studentService.updateStudentMarks(id, marks)) {
+                        System.out.println("Marks Has Been Updated..");
+                    } else {
+                        System.out.println("Entered Invalid ID!!");
+                    }
+
+                    break;
+
+                case 5:
+                    // Fetching Student Details Based on Particular ID
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    Student s = studentService.getStudent(id);
+
+                    if (s == null) {
+                        System.out.println("ID Not Found!!");
+                    } else {
+                        System.out.println(s);
+                    }
+                    break;
+
+                case 6:
+                    // Showing All Students Details
+                    Collection<Student> students = studentService.getAllStudents();
+
+                    if (students.isEmpty()) {
+                        System.out.println("No students available.");
+                    } else {
+                        for (Student st : students) {
+                            System.out.println(st);
+                        }
+                    }
+                    break;
+                case 7:
+                    // Student Exists in the DataBase
+                    System.out.print("Enter Student ID:");
+                    id = sc.nextInt();
+                    if (id <= 0) {
+                        System.out.println("ID must be positive");
+                        break;
+                    }
+
+                    if (studentService.studentExists(id)) {
+                        System.out.println("Student Exists..");
+                    } else {
+                        System.out.println("Student Does Not Exists..");
+                    }
+                    break;
+
+                case 8:
+                    // Exiting Application
+                    System.out.println("Exiting Application...");
+                    sc.close();
+                    return;
+
+                default:
+                    // Invalid Choice Entered
+                    System.out.println("Invalid Choice! Try Again!!");
+
+            }
+
         }
-
-    // Fetching Student Details Based on Particular ID
-        if(studentservice.getStudent(5) == null){
-            System.out.println("ID Not Found!!");
-        }
-        else{
-            System.out.println(studentservice.getStudent(5));
-        }
-
-    // Checking Whether Student Data is Available or Not Based on ID
-        if(studentservice.studentExists(1)){
-            System.out.println("Student Data Available");
-        }
-        else{
-            System.out.println("Student Data Not Available");
-        }
-        
-        
-
-
-        
-
 
     }
 }

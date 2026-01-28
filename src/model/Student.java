@@ -22,7 +22,7 @@ public class Student {
     }
     public void setMarks(int marks){
         if(marks < 0 || marks > 100){
-            System.out.println("Invalid marks");
+            
             return;
         }
         this.marks = marks;
