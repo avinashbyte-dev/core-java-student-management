@@ -1,6 +1,9 @@
 package main;
 
+
 import java.util.Scanner;
+
+import exceptions.InvalidStudentDataException;
 
 import java.util.Collection;
 
@@ -20,7 +23,7 @@ public class Main {
         while (true) {
             System.out.println("\n--- MENU ---");
             System.out.println(
-                    "1. Add Student\n2. Delete Student\n3. Update Student Name\n4. Update Student Marks\n5. View Student by ID\n6. View All Students\n7.studentExists\n8. Exit");
+                    "1. Add Student\n2. Delete Student\n3. Update Student Name\n4. Update Student Marks\n5. View Student by ID\n6. View All Students\n7. Check Student Exists\n8. Exit");
 
             System.out.print("Choosen One:");
             int choice = sc.nextInt();
@@ -56,12 +59,17 @@ public class Main {
                         break;
                     }
 
-                    Student student = new Student(id, name, marks);
+                    try {
+                        Student student = new Student(id, name, marks);
 
-                    if (studentService.addStudent(student)) {
-                        System.out.println("Added Student Data Successfully");
-                    } else {
-                        System.out.println("This ID already exists or Entered Invalid data");
+                        if (studentService.addStudent(student)) {
+                            System.out.println("Added Student Data Successfully");
+                        } else {
+                            System.out.println("Student with this ID already exists");
+                        }
+
+                    } catch (InvalidStudentDataException e) {
+                        System.out.println("Validation Error: " + e.getMessage());
                     }
 
                     break;
@@ -83,7 +91,7 @@ public class Main {
                     break;
 
                 case 3:
-                    // Updating Student Name based on Student ID
+
                     System.out.print("Enter Student ID:");
                     id = sc.nextInt();
                     if (id <= 0) {
@@ -99,11 +107,18 @@ public class Main {
                         break;
                     }
 
-                    if (studentService.updateStudentName(id, name)) {
-                        System.out.println("Name Has Been Updated..");
-                    } else {
-                        System.out.println("Entered Invalid ID!!");
+                    // Updating Student Name based on Student ID
+                    try {
+                        if (studentService.updateStudentName(id, name)) {
+                            System.out.println("Name Has Been Updated..");
+                        } else {
+                            System.out.println("Entered Invalid ID!!");
+                        }
+
+                    } catch (InvalidStudentDataException e) {
+                        System.out.println("Validation Error: " + e.getMessage());
                     }
+
                     break;
                 case 4:
                     System.out.print("Enter Student ID:");
@@ -122,10 +137,14 @@ public class Main {
                     }
 
                     // Updating Student Marks Based on Student ID
-                    if (studentService.updateStudentMarks(id, marks)) {
-                        System.out.println("Marks Has Been Updated..");
-                    } else {
-                        System.out.println("Entered Invalid ID!!");
+                    try {
+                        if (studentService.updateStudentMarks(id, marks)) {
+                            System.out.println("Marks Has Been Updated..");
+                        } else {
+                            System.out.println("Entered Invalid ID!!");
+                        }
+                    } catch (InvalidStudentDataException e) {
+                        System.out.println("Validation Error: " + e.getMessage());
                     }
 
                     break;

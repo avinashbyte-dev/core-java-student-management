@@ -19,7 +19,7 @@
 
 - Check if a student exists by ID
 
-- Graceful handling of invalid inputs
+- Graceful handling of invalid inputs using exceptions
 
 - Menu-driven console interface
 
@@ -30,31 +30,35 @@
 
 - Classes & Objects
 
-- Constructors
-
-- this keyword
+- Constructors & `final` keyword
 
 - Encapsulation (private fields + getters/setters)
 
-- Package-based project structure
+- Packages and modular structure
 
-- HashMap (Collections Framework)
+- `HashMap` for data storage
 
-- Enhanced for loop
+- Enhanced for-loops
 
-- Method overriding (toString())
+- Method overriding (`toString`, `equals`, `hashCode`)
 
-- Separation of Concerns (Model – Service – Main)
+- Separation of Concerns (Model → Service → Main)
+
+- Custom exceptions and validation utilities
 
 ## 🏗 Project Structure
 
 src/
+├── main/
+│ └── Main.java
 ├── model/
-│   └── Student.java
+│ └── Student.java
 ├── service/
-│   └── StudentService.java
-└── main/
-    └── Main.java
+│ └── StudentService.java
+├── util/
+│ └── StudentValidator.java
+└── exceptions/
+└── InvalidStudentDataException.java
 
 
 ## ▶️ How to Run
@@ -66,24 +70,26 @@ src/
 
 3. Compile and run Main.java
 
+4. Use the menu to add, view, update, and delete students
+
 
 ## 🎯 Learning Objective
 
 To build a strong foundation in Core Java by developing a real-world style application using OOP principles and Collections, preparing for:
 
-- Java Backend Development
+- Strengthen Core Java fundamentals
 
-- Spring Boot
+- Practice OOP design patterns
 
-- Full Stack Java Development
+- Prepare for Java backend & full-stack development
 
-- DSA and System Design
+- Build a foundation for DSA and system design readiness
 
 ## 📌 Future Enhancements
 
 - File-based data persistence
 
-- Custom exception handling
+- Custom exception handling- Menu-driven UI with better error handling
 
 - Improved validations and error handling
 
@@ -93,6 +99,9 @@ To build a strong foundation in Core Java by developing a real-world style appli
 
 ## 👨‍💻 Author
 
-Arem Avinash Reddy  
+**Arem Avinash Reddy** 
+
 Aspiring Java Full Stack Developer
+
+[LinkedIn](https://www.linkedin.com/in/arem-avinash-reddy-377879346/)  
 
