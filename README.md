@@ -85,6 +85,16 @@ To build a strong foundation in Core Java by developing a real-world style appli
 
 - Build a foundation for DSA and system design readiness
 
+## 📦 Validation & Exception Handling
+
+- Validation logic is separated into a utility layer for clean design
+
+- Custom exceptions are used instead of generic error handling
+
+- Improves code readability and maintainability
+
+- Reflects real-world Java backend application structure
+
 ## 📌 Future Enhancements
 
 - File-based data persistence
