@@ -1,5 +1,8 @@
 package model;
 
+import exceptions.InvalidStudentDataException;
+
+
 public class Student {
     private final int id;
     private String name;
@@ -16,7 +19,7 @@ public class Student {
     // Setters
     public void setName(String name) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name must be valid");
+            throw new InvalidStudentDataException("Name must be valid");
         }
         this.name = name;
 
@@ -24,7 +27,7 @@ public class Student {
 
     public void setMarks(int marks) {
         if (marks < 0 || marks > 100) {
-            throw new IllegalArgumentException("Marks must be in Valid Range");
+            throw new InvalidStudentDataException("Marks must be in Valid Range");
 
         }
         this.marks = marks;

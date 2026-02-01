@@ -1,13 +1,15 @@
+// Business logic layer for managing Student operations
 package service;
 
 import model.Student;
 import java.util.*;
+
+import exceptions.InvalidStudentDataException;
 import util.StudentValidator;
 
 public class StudentService {
 
-    // Creating a Map using Encapsulation Access Modifier to Store Student Data
-    // Based on Key,Value
+    // Creating a Map using Encapsulation Access Modifier to Store Student Data Based on Key,Value
     private Map<Integer, Student> studentMap = new HashMap<>();
 
     // A Method to Add the Student Data
@@ -25,8 +27,12 @@ public class StudentService {
 
     // A Method to Remove the Student Data
     public boolean deleteStudent(int id) {
+        if (!(studentMap.containsKey(id))) {
+            throw new InvalidStudentDataException("Student ID not found");
+        }
 
-        return studentMap.remove(id) != null;
+        studentMap.remove(id);
+        return true;
 
     }
 
@@ -38,6 +44,10 @@ public class StudentService {
         StudentValidator.validateMarks(marks);
 
         Student student = studentMap.get(id);
+
+        if (student == null) {
+            throw new InvalidStudentDataException("Student ID not found");
+        }
 
         student.setMarks(marks);
         return true;
@@ -52,29 +62,29 @@ public class StudentService {
 
         Student student = studentMap.get(id);
 
-        if (student != null && name != null && !name.isBlank()) {
-            student.setName(name);
-            return true;
+        if (student == null) {
+            throw new InvalidStudentDataException("Student ID not found");
         }
 
-        return false;
+        student.setName(name);
+        return true;
     }
 
     // A Method To Display Student Details by Student ID
     public Student getStudent(int id) {
-        if (studentMap.containsKey(id)) {
-            Student student = studentMap.get(id);
-            return student;
+        if (!(studentMap.containsKey(id))) {
+            throw new InvalidStudentDataException("Student ID not found");
         }
-        return null;
+        Student student = studentMap.get(id);
+        return student;
     }
 
     // A Method to Check whether Student data Exists or Not based on Student ID
     public boolean studentExists(int id) {
-        if (studentMap.containsKey(id)) {
-            return true;
-        }
-        return false;
+        StudentValidator.validateId(id);
+
+        return studentMap.containsKey(id);
+
     }
 
     // A Method To Display All the Student Data Already Stored
